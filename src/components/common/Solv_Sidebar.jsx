@@ -19,6 +19,7 @@ import {
   SidebarHeader,
   SidebarFooter,
   SidebarTrigger,
+  useSidebar,
 } from "../ui/sidebar";
 
 // mock user
@@ -27,6 +28,50 @@ const user = {
   email: "john@acme.com",
   avatar: "https://i.pravatar.cc/40",
 };
+
+function HeaderContent() {
+  const { state } = useSidebar();
+
+  return (
+    <div className="flex items-center justify-between px-2 py-4">
+      <div className="flex items-center gap-2">
+        <div className="h-6 w-6 rounded bg-primary" />
+        {state === "expanded" && (
+          <span className="text-sm font-semibold">Solv</span>
+        )}
+      </div>
+
+      <SidebarTrigger />
+    </div>
+  );
+}
+
+function FooterContent() {
+  const { state } = useSidebar();
+
+  return (
+    <div className="flex items-center justify-between px-2 py-2">
+      <div className="flex items-center gap-2">
+        <img
+          src={user.avatar}
+          alt="avatar"
+          className="h-8 w-8 rounded-full"
+        />
+
+        {state === "expanded" && (
+          <div className="text-xs">
+            <div className="font-medium">{user.name}</div>
+            <div className="text-muted-foreground">{user.email}</div>
+          </div>
+        )}
+      </div>
+
+      {state === "expanded" && (
+        <LogOut size={16} className="cursor-pointer opacity-70 hover:opacity-100" />
+      )}
+    </div>
+  );
+}
 
 export function SolvSideBar({ items }) {
   const location = useLocation();
@@ -48,24 +93,29 @@ export function SolvSideBar({ items }) {
       return (
         <SidebarMenuItem key={item.path}>
           <SidebarMenuButton
-            onClick={() => hasChildren && toggle(item.path)}
+            asChild
             isActive={isActive(item.path)}
-            className="text-[13px] font-medium"
+            tooltip={item.title}
+            className="text-[13px] font-medium justify-start group-data-[collapsible=icon]:justify-center"
+            onClick={() => hasChildren && toggle(item.path)}
           >
-            {Icon && <Icon size={16} />}
+            <Link to={item.path} className="flex items-center gap-2 w-full">
+              {Icon && <Icon size={16} />}
 
-            <Link to={item.path} className="flex-1">
-              {item.title}
+              {/* Hide label when collapsed */}
+              <span className="group-data-[collapsible=icon]:hidden">
+                {item.title}
+              </span>
+
+              {hasChildren && (
+                <ChevronDown
+                  className={`ml-auto transition-transform group-data-[collapsible=icon]:hidden ${
+                    isOpen ? "rotate-180" : ""
+                  }`}
+                  size={14}
+                />
+              )}
             </Link>
-
-            {hasChildren && (
-              <ChevronDown
-                className={`transition-transform ${
-                  isOpen ? "rotate-180" : ""
-                }`}
-                size={14}
-              />
-            )}
           </SidebarMenuButton>
 
           {hasChildren && isOpen && (
@@ -90,17 +140,10 @@ export function SolvSideBar({ items }) {
 
   return (
     <SidebarProvider>
-      <Sidebar>
+      <Sidebar collapsible="icon">
         {/* Header */}
         <SidebarHeader className="sticky top-0 z-10 bg-sidebar border-b">
-          <div className="flex items-center justify-between px-2 py-2">
-            <div className="flex items-center gap-2">
-              <div className="h-6 w-6 rounded bg-primary" />
-              <span className="text-sm font-semibold">Solv</span>
-            </div>
-
-            <SidebarTrigger />
-          </div>
+          <HeaderContent />
         </SidebarHeader>
 
         {/* Content */}
@@ -114,21 +157,7 @@ export function SolvSideBar({ items }) {
 
         {/* Footer */}
         <SidebarFooter className="sticky bottom-0 bg-sidebar border-t">
-          <div className="flex items-center justify-between px-2 py-2">
-            <div className="flex items-center gap-2">
-              <img
-                src={user.avatar}
-                alt="avatar"
-                className="h-8 w-8 rounded-full"
-              />
-              <div className="text-xs">
-                <div className="font-medium">{user.name}</div>
-                <div className="text-muted-foreground">{user.email}</div>
-              </div>
-            </div>
-
-            <LogOut size={16} className="cursor-pointer opacity-70 hover:opacity-100" />
-          </div>
+          <FooterContent />
         </SidebarFooter>
       </Sidebar>
     </SidebarProvider>
