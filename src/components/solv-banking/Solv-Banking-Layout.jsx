@@ -3,7 +3,7 @@ import { SolvSideBar } from "../common/Solv_Sidebar";
 
 const sidebarConfig = [
   {
-    path: "/admin/configurations",
+    path: " ",
     title: "Configurations",
     submenu: [
       {
