@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
+} from "../ui/Card";
 
 export default function AuthFormShell({
   eyebrow = "Secure Access",
