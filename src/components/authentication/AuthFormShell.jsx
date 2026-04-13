@@ -9,7 +9,7 @@ import {
 } from "../ui/Card";
 
 export default function AuthFormShell({
-  eyebrow = "Secure Access",
+  eyebrow = "Onese Access",
   title,
   description,
   footer,
