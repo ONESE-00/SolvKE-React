@@ -10,6 +10,7 @@ export function Field({
   onChange,
   placeholder,
   options = [],
+  ...props
 }) {
   const fieldId = name ?? label.toLowerCase().replace(/\s+/g, "-");
 
@@ -39,6 +40,7 @@ export function Field({
           onChange={onChange}
           placeholder={placeholder}
           className="h-12 rounded-2xl border-slate-200 bg-white"
+          {...props}
         />
       )}
     </div>
