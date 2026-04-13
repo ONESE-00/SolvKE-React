@@ -1,6 +1,8 @@
+// SolvSidebar.tsx
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import * as Icons from "lucide-react";
+import { ChevronDown, LogOut } from "lucide-react";
 
 import {
   Sidebar,
@@ -10,10 +12,23 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarProvider
-} from "../ui/sidebar"
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  SidebarMenuSubButton,
+  SidebarProvider,
+  SidebarHeader,
+  SidebarFooter,
+  SidebarTrigger,
+} from "../ui/sidebar";
 
-export function SolvSideBar({ config, items }) {
+// mock user
+const user = {
+  name: "John Doe",
+  email: "john@acme.com",
+  avatar: "https://i.pravatar.cc/40",
+};
+
+export function SolvSideBar({ items }) {
   const location = useLocation();
   const [open, setOpen] = useState({});
 
@@ -23,40 +38,51 @@ export function SolvSideBar({ config, items }) {
 
   const isActive = (path) => location.pathname.startsWith(path);
 
-  const renderMenu = (items, depth = 0) => {
+  const renderMenu = (items) => {
     return items?.map((item) => {
       const hasChildren = item.submenu?.length > 0;
       const isOpen = open[item.path];
 
+      const Icon = item.icon ? Icons[item.icon] : null;
+
       return (
         <SidebarMenuItem key={item.path}>
-          <div className="flex flex-col">
-            <SidebarMenuButton
-              onClick={() => hasChildren && toggle(item.path)}
-              className={`flex justify-between items-center
-                ${isActive(item.path) ? "bg-primary/10 text-primary" : ""}
-              `}
-            >
-              <Link to={item.path} className="flex-1">
-                {item.title}
-              </Link>
+          <SidebarMenuButton
+            onClick={() => hasChildren && toggle(item.path)}
+            isActive={isActive(item.path)}
+            className="text-[13px] font-medium"
+          >
+            {Icon && <Icon size={16} />}
 
-              {hasChildren && (
-                <ChevronDown
-                  className={`transition-transform ${
-                    isOpen ? "rotate-180" : ""
-                  }`}
-                  size={16}
-                />
-              )}
-            </SidebarMenuButton>
+            <Link to={item.path} className="flex-1">
+              {item.title}
+            </Link>
 
-            {hasChildren && isOpen && (
-              <div className="ml-4 mt-1 space-y-1">
-                {renderMenu(item.submenu, depth + 1)}
-              </div>
+            {hasChildren && (
+              <ChevronDown
+                className={`transition-transform ${
+                  isOpen ? "rotate-180" : ""
+                }`}
+                size={14}
+              />
             )}
-          </div>
+          </SidebarMenuButton>
+
+          {hasChildren && isOpen && (
+            <SidebarMenuSub>
+              {item.submenu.map((sub) => (
+                <SidebarMenuSubItem key={sub.path}>
+                  <SidebarMenuSubButton
+                    asChild
+                    isActive={isActive(sub.path)}
+                    className="text-[12.5px] font-medium"
+                  >
+                    <Link to={sub.path}>{sub.title}</Link>
+                  </SidebarMenuSubButton>
+                </SidebarMenuSubItem>
+              ))}
+            </SidebarMenuSub>
+          )}
         </SidebarMenuItem>
       );
     });
@@ -64,15 +90,47 @@ export function SolvSideBar({ config, items }) {
 
   return (
     <SidebarProvider>
-    <Sidebar>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>{renderMenu(items)}</SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-    </Sidebar>
+      <Sidebar>
+        {/* Header */}
+        <SidebarHeader className="sticky top-0 z-10 bg-sidebar border-b">
+          <div className="flex items-center justify-between px-2 py-2">
+            <div className="flex items-center gap-2">
+              <div className="h-6 w-6 rounded bg-primary" />
+              <span className="text-sm font-semibold">Solv</span>
+            </div>
+
+            <SidebarTrigger />
+          </div>
+        </SidebarHeader>
+
+        {/* Content */}
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupContent>
+              <SidebarMenu>{renderMenu(items)}</SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+
+        {/* Footer */}
+        <SidebarFooter className="sticky bottom-0 bg-sidebar border-t">
+          <div className="flex items-center justify-between px-2 py-2">
+            <div className="flex items-center gap-2">
+              <img
+                src={user.avatar}
+                alt="avatar"
+                className="h-8 w-8 rounded-full"
+              />
+              <div className="text-xs">
+                <div className="font-medium">{user.name}</div>
+                <div className="text-muted-foreground">{user.email}</div>
+              </div>
+            </div>
+
+            <LogOut size={16} className="cursor-pointer opacity-70 hover:opacity-100" />
+          </div>
+        </SidebarFooter>
+      </Sidebar>
     </SidebarProvider>
   );
 }

@@ -3,42 +3,28 @@ import { SolvSideBar } from "../common/Solv_Sidebar";
 
 const sidebarConfig = [
   {
-    path: " ",
+    path: "/admin/configurations",
     title: "Configurations",
+    icon: "Settings",
     submenu: [
-      {
-        path: "/admin/configurations/subsidiary",
-        title: "Subsidiary",
-      },
-      {
-        path: "/admin/configurations/glconfigs/currency",
-        title: "Currency",
-      },
-      {
-        path: "/admin/configurations/module-types",
-        title: "Module Types",
-      },
-      {
-        path: "/admin/configurations/gl-maintenance",
-        title: "GL Maintenance",
-      },
-      {
-        path: "/admin/configurations/file-configs",
-        title: "File Configurations",
-      },
+      { path: "/admin/configurations/subsidiary", title: "Subsidiary" },
+      { path: "/admin/configurations/glconfigs/currency", title: "Currency" },
     ],
   },
   {
     path: "/solv-banking",
     title: "Users",
+    icon: "Users",
   },
   {
     path: "/solv-banking/account",
     title: "Roles",
+    icon: "Shield",
   },
   {
     path: "/solv-bankings",
     title: "Access Policies",
+    icon: "Key",
   },
 ];
 
