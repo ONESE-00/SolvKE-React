@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { SolvSideBar } from "../common/Solv_Sidebar";
-import { Solv_TopBar } from "../common/Solv_topBar";
+import * as React from "react";
+// import { Solv_TopBar } from "../common/Solv_topBar";
 
 const sidebarConfig = [
   {
@@ -11,22 +12,24 @@ const sidebarConfig = [
       { path: "/admin/configurations/glconfigs/currency", title: "Currency" },
     ],
   },
-  {
-    path: "/solv-banking",
-    title: "Users",
-    icon: "Users",
-  },
+  // {
+  //   path: "/solv-banking",
+  //   title: "Users",
+  //   icon: "Users",
+  // },
   {
     path: "/solv-banking/account",
-    title: "Roles",
+    title: "Account",
     icon: "Shield",
   },
   {
     path: "/solv-banking/profile",
-    title: "Access Policies",
+    title: "Profile",
     icon: "Key",
   },
 ];
+
+export const SolvBankingContext = React.createContext("Solv Banking")
 
 export default function SolvBankingLayout() {
 

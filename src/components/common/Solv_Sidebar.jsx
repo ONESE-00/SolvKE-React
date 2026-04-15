@@ -1,5 +1,6 @@
 // SolvSidebar.tsx
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import * as Icons from "lucide-react";
 import { ChevronDown, LogOut } from "lucide-react";
@@ -48,7 +49,11 @@ function HeaderContent() {
 
 function FooterContent() {
   const { state } = useSidebar();
+  const newUser = useSelector((state)=> state.user)
+  console.log("User from store:", newUser);
+  const storestate = useSelector((state) => state);
 
+console.log("FULL REDUX STATE:", storestate);
   return (
     <div className="flex items-center justify-between px-2 py-2">
       <div className="flex items-center gap-2">
@@ -60,8 +65,8 @@ function FooterContent() {
 
         {state === "expanded" && (
           <div className="text-xs">
-            <div className="font-medium">{user.name}</div>
-            <div className="text-muted-foreground">{user.email}</div>
+            <div className="font-medium">{newUser.name}</div>
+            <div className="text-muted-foreground">{newUser.email}</div>
           </div>
         )}
       </div>

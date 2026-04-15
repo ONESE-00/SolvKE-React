@@ -531,7 +531,7 @@ const SidebarMenuBadge = React.forwardRef(({ className, ...props }, ref) => (
     )}
     {...props} />
 ))
-SidebarMenuBadge.displayName = "SidebarMenuBadge"
+SidebarMenuBadge.displayName = "SfidebarMenuBadge"
 
 const SidebarMenuSkeleton = React.forwardRef(({ className, showIcon = false, ...props }, ref) => {
   // Random width between 50 to 90%.

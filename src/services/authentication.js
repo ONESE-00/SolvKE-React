@@ -46,13 +46,9 @@ export const authenticationService = {
   },
 
   //Current User
-  getCurrentUser(token, showSuccess = false) {
+  getCurrentUser(email, showSuccess = false) {
     return handleResponse(
-      apiClient.get("/auth/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }),
+      apiClient.get("/auth/me",   { params: { email } }),
       showSuccess,
     );
   },
