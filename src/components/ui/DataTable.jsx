@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/Input";
+import { Field } from "./Field";
 import { Checkbox } from "@/components/ui/checkbox";
 
 export default function DataTable({
@@ -20,7 +21,7 @@ export default function DataTable({
   totalPages = 1,
   actionButtons = [],
 }) {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(" ");
   const [page, setPage] = useState(1);
   const [selectedRows, setSelectedRows] = useState([]);
 
@@ -65,7 +66,7 @@ export default function DataTable({
   };
 
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full space-y-4 rounded-md border px-2 py-4">
       {/* TITLE + SEARCH */}
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold">{title}</h2>
@@ -74,7 +75,8 @@ export default function DataTable({
           placeholder="Search..."
           value={search}
           onChange={(e) => handleSearch(e.target.value)}
-          className="w-64"
+          className="w-[320px] h-12 rounded-2xl border-slate-200 bg-white"
+
         />
       </div>
 
@@ -148,24 +150,41 @@ export default function DataTable({
       </Table>
 
       {/* PAGINATION */}
-      <div className="flex justify-end gap-2">
-        <button
-          disabled={page === 1}
-          onClick={() => handlePageChange(page - 1)}
-        >
-          Prev
-        </button>
+      <div className="flex items-center justify-between mt-4">
 
-        <span>
+        {/* LEFT - pagination info */}
+        <div className="text-sm text-gray-500">
           Page {page} of {totalPages}
-        </span>
+        </div>
 
-        <button
-          disabled={page === totalPages}
-          onClick={() => handlePageChange(page + 1)}
-        >
-          Next
-        </button>
+        {/* RIGHT - buttons */}
+        <div className="flex gap-2">
+          <button
+            onClick={() => handlePageChange(page - 1)}
+            disabled={page === 1}
+            className="
+        px-3 py-1 text-sm rounded-md border
+        hover:bg-gray-100
+        disabled:opacity-50
+        disabled:cursor-not-allowed
+      "
+          >
+            Previous
+          </button>
+
+          <button
+            onClick={() => handlePageChange(page + 1)}
+            disabled={page === totalPages}
+            className="
+        px-3 py-1 text-sm rounded-md border
+        hover:bg-gray-100
+        disabled:opacity-50
+        disabled:cursor-not-allowed
+      "
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );
