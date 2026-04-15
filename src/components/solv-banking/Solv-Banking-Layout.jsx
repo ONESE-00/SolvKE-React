@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { SolvSideBar } from "../common/Solv_Sidebar";
+import { SolvSideBar } from "../ui/Solv_Sidebar";
 import * as React from "react";
 // import { Solv_TopBar } from "../common/Solv_topBar";
 
