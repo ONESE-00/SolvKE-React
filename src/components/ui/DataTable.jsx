@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/Input";
 import { Field } from "./Field";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "./Button";
 
 export default function DataTable({
   title,
@@ -134,13 +135,14 @@ export default function DataTable({
               {actionButtons.length > 0 && (
                 <TableCell className="space-x-2">
                   {actionButtons.map((btn, i) => (
-                    <button
+                    <Button
                       key={i}
-                      className="text-blue-600 hover:underline"
-                      onClick={() => btn.onClick(row)}
+                      variant="outline"
+                      size="xxsm"
+                      onClick={() => btn.onClick(row, btn.type)}
                     >
                       {btn.label}
-                    </button>
+                    </Button>
                   ))}
                 </TableCell>
               )}

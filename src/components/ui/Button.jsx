@@ -11,12 +11,16 @@ const buttonVariants = cva(
         default: "bg-primary text-white hover:bg-blue-950",
         ghost:
           "border border-slate-200 bg-white text-slate-700 hover:border-primary hover:text-primary",
-        secondary: "bg-secondary text-white hover:bg-[#e65b18]",
+        secondary: "bg-secondary text-white hover:bg-[#e65b18] ",
+        outline: "border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-100",
+        destructive: "bg-red-600 text-white hover:bg-red-700",
       },
       size: {
         default: "px-5 py-3",
         sm: "px-4 py-2.5",
         lg: "px-6 py-3.5",
+        xsm: "px-4 py-2",
+        xxsm: "px-2 py-1",
       },
     },
     defaultVariants: {
